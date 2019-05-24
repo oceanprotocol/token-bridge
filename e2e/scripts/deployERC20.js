@@ -6,7 +6,8 @@ require('dotenv').config({
 
 const {
   deployContract,
-  sendRawTx
+  sendRawTxForeign,
+  privateKeyToAddress
 } = require('../submodules/poa-bridge-contracts/deploy/src/deploymentUtils')
 const {
   web3Foreign,
@@ -15,7 +16,8 @@ const {
 const POA20 = require('../submodules/poa-bridge-contracts/build/contracts/ERC677BridgeToken.json')
 const { user } = require('../constants.json')
 
-const { DEPLOYMENT_ACCOUNT_ADDRESS } = process.env
+const { DEPLOYMENT_ACCOUNT_PRIVATE_KEY } = process.env
+const DEPLOYMENT_ACCOUNT_ADDRESS = privateKeyToAddress(DEPLOYMENT_ACCOUNT_PRIVATE_KEY)
 
 async function deployErc20() {
   try {
@@ -32,7 +34,7 @@ async function deployErc20() {
     const mintData = await poa20foreign.methods
       .mint(user.address, '1000000000000000000')
       .encodeABI({ from: DEPLOYMENT_ACCOUNT_ADDRESS })
-    await sendRawTx({
+    await sendRawTxForeign({
       data: mintData,
       nonce: foreignNonce,
       to: poa20foreign.options.address,

@@ -12,5 +12,13 @@ module.exports = {
     GENERAL_ERROR: 1,
     INCOMPATIBILITY: 10,
     MAX_TIME_REACHED: 11
+  },
+  GAS_PRICE_BOUNDARIES: {
+    MIN: 1,
+    MAX: 250
+  },
+  ERC_TYPES: {
+    ERC20: 'ERC20',
+    ERC677: 'ERC677'
   }
 }
